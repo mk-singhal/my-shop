@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
+    'payment.apps.PaymentConfig'
 ]
 
 MIDDLEWARE = [
@@ -136,3 +137,20 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # Cart
 CART_SESSION_ID = 'cart'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Setting up Brain Tree Account
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
+
+Merchant_ID = os.environ.get('Merchant_ID')
+Public_key = os.environ.get('Public_key')
+Private_key = os.environ.get('Private_key')
+
+import braintree
+
+BRAINTREE_CONF = braintree.Configuration(
+    braintree.Environment.Sandbox,
+    Merchant_ID,
+    Public_key,
+    Private_key
+)
